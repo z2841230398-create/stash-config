@@ -1,17 +1,37 @@
 proxy-providers:
   服务商2:
+    type: http
     interval: 0
     url: https://cdn2.xmrth.one/s/i4g1esijavvb-22669856?clash=1
+    path: ./providers/provider2.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
+
   服务商1:
+    type: http
     interval: 600
     url: https://fba02.fbsubcn01.cc:2096/flydsubal/8u9sl8dgcyrotzrr?clash=1&extend=1
+    path: ./providers/provider1.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
+
   服务商3:
+    type: http
     interval: 600
     url: https://gjsdtf.yau96.com/config?token=302dfcfbb75bac92e8a8811af98f8eef
+    path: ./providers/provider3.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
+
 
 proxy-groups:
   - name: 选择代理
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
     type: select
     proxies:
       - 自动选择
@@ -24,7 +44,6 @@ proxy-groups:
       - DIRECT
 
   - name: Netflix
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
     type: select
     proxies:
       - 自动选择
@@ -37,7 +56,6 @@ proxy-groups:
       - DIRECT
 
   - name: Disney+
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Disney%2B.png
     type: select
     proxies:
       - 自动选择
@@ -49,15 +67,7 @@ proxy-groups:
       - US 美国
       - DIRECT
 
-  - name: telegram
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
-    type: url-test
-    proxies:
-      - JP 日本
-      - HK 香港
-
   - name: Spotify
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
     type: select
     proxies:
       - 自动选择
@@ -70,7 +80,6 @@ proxy-groups:
       - DIRECT
 
   - name: YouTube
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
     type: select
     proxies:
       - 自动选择
@@ -83,7 +92,6 @@ proxy-groups:
       - DIRECT
 
   - name: Speedtest
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
     type: select
     proxies:
       - 自动选择
@@ -96,98 +104,90 @@ proxy-groups:
       - DIRECT
 
   - name: 默认
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
     type: select
     proxies:
       - 选择代理
       - DIRECT
 
+
   - name: HK 香港
-    filter: "澳门|🇲🇴|港|🇭🇰|HK|(?i)Hong"
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    filter: "港|HK|Hong"
+    interval: 120
+    tolerance: 50
 
   - name: TW 台湾
-    filter: "台|🇹🇼|湾|TW|(?i)Taiwan"
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    filter: "台|TW|Taiwan"
+    interval: 120
+    tolerance: 50
 
   - name: SG 新加坡
-    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    filter: "新加坡|SG|Singapore"
+    interval: 120
+    tolerance: 50
 
   - name: JP 日本
-    filter: "日|🇯🇵|东京|JP|(?i)Japan"
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    filter: "日|JP|Japan"
+    interval: 120
+    tolerance: 50
 
   - name: US 美国
-    filter: "美|🇺🇲|US|(?i)States|America"
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    filter: "美|US|America"
+    interval: 120
+    tolerance: 50
 
   - name: 自动选择
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png
-    interval: 120
-    lazy: true
-    tolerance: 50
     type: url-test
     include-all: true
+    interval: 120
+    tolerance: 50
 
   - name: 手动选择
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Static.png
-    interval: 120
-    lazy: true
     type: select
     include-all: true
 
+
 rules:
-  - DOMAIN-KEYWORD,telegram,US 美国
-  - DOMAIN-KEYWORD,telegram,telegram
+  - DOMAIN-KEYWORD,telegram,选择代理
   - SCRIPT,quic,REJECT
+
   - GEOSITE,netflix,Netflix
   - GEOSITE,disney,Disney+
   - GEOSITE,spotify,Spotify
   - GEOSITE,speedtest,Speedtest
+
   - GEOSITE,github,选择代理
   - GEOSITE,telegram,选择代理
+
   - GEOSITE,youtube,YouTube
   - GEOSITE,google,选择代理
   - GEOSITE,twitter,选择代理
   - GEOSITE,instagram,选择代理
   - GEOSITE,facebook,选择代理
+
   - GEOSITE,steam@cn,DIRECT
   - GEOSITE,steam,选择代理
-  - GEOSITE,microsoft@cn,DIRECT
-  - GEOSITE,microsoft,选择代理
+
+  - DOMAIN-SUFFIX,push.apple.com,DIRECT
+
   - GEOIP,LAN,DIRECT
   - GEOIP,CN,DIRECT
   - MATCH,默认
 
+
 script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
+
 
 dns:
   enable: true
@@ -196,6 +196,13 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - "localhost.ptlogin2.qq.com"
+
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -203,32 +210,8 @@ dns:
   nameserver:
     - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
+    - https://9.9.9.9/dns-query
 
-  fallback:
-    - https://1.0.0.1/dns-query
-    - https://8.8.4.4/dns-query
-    - tls://1.1.1.1:853
-    - tls://8.8.8.8:853
 
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-
-  nameserver-policy:
-    "geosite:cn":
-      - https://223.5.5.5/dns-query
-      - https://120.53.53.53/dns-query
-
-  fake-ip-filter:
-    - "*.lan"
-    - "*.local"
-    - "*.localdomain"
-    - "*.home.arpa"
-    - time.apple.com
-    - time-ios.apple.com
-    - "*.ntp.org"
-
-log-level: warning
 mode: rule
+log-level: warning
