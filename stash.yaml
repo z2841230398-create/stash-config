@@ -1,34 +1,33 @@
-proxy-providers:
-  服务商2:
-    type: http
-    interval: 0
-    url: https://cdn2.xmrth.one/s/i4g1esijavvb-22669856?clash=1
-    path: ./providers/provider2.yaml
-    health-check:
-      enable: true
-      interval: 600
-      url: http://www.gstatic.com/generate_204
+mode: rule
+log-level: warning
 
+proxy-providers:
   服务商1:
     type: http
-    interval: 600
     url: https://fba02.fbsubcn01.cc:2096/flydsubal/8u9sl8dgcyrotzrr?clash=1&extend=1
-    path: ./providers/provider1.yaml
+    interval: 600
     health-check:
       enable: true
-      interval: 600
+      interval: 300
+      url: http://www.gstatic.com/generate_204
+
+  服务商2:
+    type: http
+    url: https://cdn2.xmrth.one/s/i4g1esijavvb-22669856?clash=1
+    interval: 600
+    health-check:
+      enable: true
+      interval: 300
       url: http://www.gstatic.com/generate_204
 
   服务商3:
     type: http
-    interval: 600
     url: https://gjsdtf.yau96.com/config?token=302dfcfbb75bac92e8a8811af98f8eef
-    path: ./providers/provider3.yaml
+    interval: 600
     health-check:
       enable: true
-      interval: 600
+      interval: 300
       url: http://www.gstatic.com/generate_204
-
 
 proxy-groups:
   - name: 选择代理
@@ -43,39 +42,79 @@ proxy-groups:
       - US 美国
       - DIRECT
 
+  - name: 自动选择
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: 手动选择
+    type: select
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+
+  - name: HK 香港
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    filter: "港|HK|Hong"
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: TW 台湾
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    filter: "台|TW|Taiwan"
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: SG 新加坡
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    filter: "新加坡|SG|Singapore"
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: JP 日本
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    filter: "日|JP|Japan"
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: US 美国
+    type: url-test
+    use:
+      - 服务商1
+      - 服务商2
+      - 服务商3
+    filter: "美|US|America"
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+
   - name: Netflix
     type: select
     proxies:
       - 自动选择
-      - 手动选择
       - HK 香港
-      - TW 台湾
-      - SG 新加坡
       - JP 日本
-      - US 美国
-      - DIRECT
-
-  - name: Disney+
-    type: select
-    proxies:
-      - 自动选择
-      - 手动选择
-      - HK 香港
-      - TW 台湾
       - SG 新加坡
-      - JP 日本
-      - US 美国
-      - DIRECT
-
-  - name: Spotify
-    type: select
-    proxies:
-      - 自动选择
-      - 手动选择
-      - HK 香港
-      - TW 台湾
-      - SG 新加坡
-      - JP 日本
       - US 美国
       - DIRECT
 
@@ -83,23 +122,19 @@ proxy-groups:
     type: select
     proxies:
       - 自动选择
-      - 手动选择
       - HK 香港
-      - TW 台湾
-      - SG 新加坡
       - JP 日本
+      - SG 新加坡
       - US 美国
       - DIRECT
 
-  - name: Speedtest
+  - name: Spotify
     type: select
     proxies:
       - 自动选择
-      - 手动选择
       - HK 香港
-      - TW 台湾
-      - SG 新加坡
       - JP 日本
+      - SG 新加坡
       - US 美国
       - DIRECT
 
@@ -109,85 +144,18 @@ proxy-groups:
       - 选择代理
       - DIRECT
 
-
-  - name: HK 香港
-    type: url-test
-    include-all: true
-    filter: "港|HK|Hong"
-    interval: 120
-    tolerance: 50
-
-  - name: TW 台湾
-    type: url-test
-    include-all: true
-    filter: "台|TW|Taiwan"
-    interval: 120
-    tolerance: 50
-
-  - name: SG 新加坡
-    type: url-test
-    include-all: true
-    filter: "新加坡|SG|Singapore"
-    interval: 120
-    tolerance: 50
-
-  - name: JP 日本
-    type: url-test
-    include-all: true
-    filter: "日|JP|Japan"
-    interval: 120
-    tolerance: 50
-
-  - name: US 美国
-    type: url-test
-    include-all: true
-    filter: "美|US|America"
-    interval: 120
-    tolerance: 50
-
-  - name: 自动选择
-    type: url-test
-    include-all: true
-    interval: 120
-    tolerance: 50
-
-  - name: 手动选择
-    type: select
-    include-all: true
-
-
 rules:
-  - DOMAIN-KEYWORD,telegram,选择代理
-  - SCRIPT,quic,REJECT
-
   - GEOSITE,netflix,Netflix
-  - GEOSITE,disney,Disney+
-  - GEOSITE,spotify,Spotify
-  - GEOSITE,speedtest,Speedtest
-
-  - GEOSITE,github,选择代理
-  - GEOSITE,telegram,选择代理
-
   - GEOSITE,youtube,YouTube
+  - GEOSITE,spotify,Spotify
+  - GEOSITE,telegram,选择代理
   - GEOSITE,google,选择代理
   - GEOSITE,twitter,选择代理
-  - GEOSITE,instagram,选择代理
   - GEOSITE,facebook,选择代理
-
-  - GEOSITE,steam@cn,DIRECT
-  - GEOSITE,steam,选择代理
-
-  - DOMAIN-SUFFIX,push.apple.com,DIRECT
-
-  - GEOIP,LAN,DIRECT
+  - GEOSITE,instagram,选择代理
+  - GEOSITE,github,选择代理
   - GEOIP,CN,DIRECT
   - MATCH,默认
-
-
-script:
-  shortcuts:
-    quic: network == 'udp' and dst_port == 443
-
 
 dns:
   enable: true
@@ -196,13 +164,6 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
-  fake-ip-filter:
-    - "*.lan"
-    - "*.local"
-    - "*.msftconnecttest.com"
-    - "*.msftncsi.com"
-    - "localhost.ptlogin2.qq.com"
-
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -210,8 +171,3 @@ dns:
   nameserver:
     - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
-    - https://9.9.9.9/dns-query
-
-
-mode: rule
-log-level: warning
