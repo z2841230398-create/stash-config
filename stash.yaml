@@ -1,29 +1,200 @@
-mixed-port: 7890
-allow-lan: true
-mode: rule
-log-level: info
-ipv6: false
+proxy-providers:
+  服务商2:
+    interval: 0
+    url: https://cdn2.xmrth.one/s/i4g1esijavvb-22669856?clash=1
+  服务商1:
+    interval: 600
+    url: https://fba02.fbsubcn01.cc:2096/flydsubal/8u9sl8dgcyrotzrr?clash=1&extend=1
+  服务商3:
+    interval: 600
+    url: https://gjsdtf.yau96.com/config?token=302dfcfbb75bac92e8a8811af98f8eef
 
-################################
-# DNS 防泄漏系统
-################################
+proxy-groups:
+  - name: 选择代理
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: Netflix
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: Disney+
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Disney%2B.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: telegram
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
+    type: url-test
+    proxies:
+      - JP 日本
+      - HK 香港
+
+  - name: Spotify
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: YouTube
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: Speedtest
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - HK 香港
+      - TW 台湾
+      - SG 新加坡
+      - JP 日本
+      - US 美国
+      - DIRECT
+
+  - name: 默认
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
+    type: select
+    proxies:
+      - 选择代理
+      - DIRECT
+
+  - name: HK 香港
+    filter: "澳门|🇲🇴|港|🇭🇰|HK|(?i)Hong"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: TW 台湾
+    filter: "台|🇹🇼|湾|TW|(?i)Taiwan"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: SG 新加坡
+    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: JP 日本
+    filter: "日|🇯🇵|东京|JP|(?i)Japan"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: US 美国
+    filter: "美|🇺🇲|US|(?i)States|America"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: 自动选择
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+
+  - name: 手动选择
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Static.png
+    interval: 120
+    lazy: true
+    type: select
+    include-all: true
+
+rules:
+  - DOMAIN-KEYWORD,telegram,US 美国
+  - DOMAIN-KEYWORD,telegram,telegram
+  - SCRIPT,quic,REJECT
+  - GEOSITE,netflix,Netflix
+  - GEOSITE,disney,Disney+
+  - GEOSITE,spotify,Spotify
+  - GEOSITE,speedtest,Speedtest
+  - GEOSITE,github,选择代理
+  - GEOSITE,telegram,选择代理
+  - GEOSITE,youtube,YouTube
+  - GEOSITE,google,选择代理
+  - GEOSITE,twitter,选择代理
+  - GEOSITE,instagram,选择代理
+  - GEOSITE,facebook,选择代理
+  - GEOSITE,steam@cn,DIRECT
+  - GEOSITE,steam,选择代理
+  - GEOSITE,microsoft@cn,DIRECT
+  - GEOSITE,microsoft,选择代理
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,默认
+
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
 
 dns:
   enable: true
-  listen: 0.0.0.0:53
+  listen: 0.0.0.0:1053
   ipv6: false
-
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  respect-rules: true
-
-  fake-ip-filter:
-    - "*.lan"
-    - "*.local"
-    - "*.arpa"
-    - "*.ntp.org"
-    - time.apple.com
-    - time-ios.apple.com
 
   default-nameserver:
     - 223.5.5.5
@@ -31,166 +202,33 @@ dns:
 
   nameserver:
     - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
     - https://dns.google/dns-query
+    - https://cloudflare-dns.com/dns-query
 
   fallback:
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.quad9.net/dns-query
+    - https://1.0.0.1/dns-query
+    - https://8.8.4.4/dns-query
+    - tls://1.1.1.1:853
+    - tls://8.8.8.8:853
 
   fallback-filter:
     geoip: true
     geoip-code: CN
 
-################################
-# 机场订阅
-################################
+  nameserver-policy:
+    "geosite:cn":
+      - https://223.5.5.5/dns-query
+      - https://120.53.53.53/dns-query
 
-proxy-providers:
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "*.localdomain"
+    - "*.home.arpa"
+    - time.apple.com
+    - time-ios.apple.com
+    - "*.ntp.org"
 
-  Airport1:
-    type: http
-    url: "https://fba02.fbsubcn01.cc:2096/flydsubal/8u9sl8dgcyrotzrr?clash=1&extend=1"
-    interval: 3600
-    path: ./proxies/airport1.yaml
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 300
-
-  Airport2:
-    type: http
-    url: "https://cdn2.xmrth.one/s/i4g1esijavvb-22669856?clash=1"
-    interval: 3600
-    path: ./proxies/airport2.yaml
-
-  Airport3:
-    type: http
-    url: "https://gjsdtf.yau96.com/config?token=302dfcfbb75bac92e8a8811af98f8eef" 
-    interval: 3600
-    path: ./proxies/airport3.yaml
-
-################################
-# 节点策略
-################################
-
-proxy-groups:
-
-- name: 🚀 节点选择
-  type: select
-  proxies:
-    - ⚡ 自动选择
-    - 🇭🇰 香港节点
-    - 🇯🇵 日本节点
-    - 🇺🇸 美国节点
-    - 🇸🇬 新加坡节点
-    - 🌍 其它节点
-    - DIRECT
-
-- name: ⚡ 自动选择
-  type: url-test
-  use:
-    - Airport1
-    - Airport2
-    - Airport3
-  url: http://www.gstatic.com/generate_204
-  interval: 300
-
-- name: 🇭🇰 香港节点
-  type: select
-  filter: "(?i)hk|hongkong|香港"
-
-- name: 🇯🇵 日本节点
-  type: select
-  filter: "(?i)jp|japan|tokyo|日本"
-
-- name: 🇺🇸 美国节点
-  type: select
-  filter: "(?i)us|america|unitedstates|美国"
-
-- name: 🇸🇬 新加坡节点
-  type: select
-  filter: "(?i)sg|singapore|新加坡"
-
-- name: 🌍 其它节点
-  type: select
-  use:
-    - Airport1
-    - Airport2
-    - Airport3
-
-################################
-# 规则库
-################################
-
-rule-providers:
-
-  reject:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt
-    path: ./ruleset/reject.yaml
-    interval: 86400
-
-  direct:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
-    path: ./ruleset/direct.yaml
-    interval: 86400
-
-  proxy:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
-    path: ./ruleset/proxy.yaml
-    interval: 86400
-
-################################
-# 分流规则
-################################
-
-rules:
-
-# 广告拦截
-- RULE-SET,reject,REJECT
-
-# 国内直连
-- RULE-SET,direct,DIRECT
-
-# 国外代理
-- RULE-SET,proxy,🚀 节点选择
-
-# AI
-- DOMAIN-SUFFIX,openai.com,🇺🇸 美国节点
-- DOMAIN-SUFFIX,chatgpt.com,🇺🇸 美国节点
-- DOMAIN-SUFFIX,anthropic.com,🇺🇸 美国节点
-- DOMAIN-SUFFIX,perplexity.ai,🇺🇸 美国节点
-
-# Google
-- DOMAIN-SUFFIX,google.com,🚀 节点选择
-- DOMAIN-SUFFIX,youtube.com,🚀 节点选择
-
-# 流媒体
-- DOMAIN-SUFFIX,netflix.com,🇯🇵 日本节点
-- DOMAIN-SUFFIX,disneyplus.com,🇯🇵 日本节点
-- DOMAIN-SUFFIX,hulu.com,🇯🇵 日本节点
-- DOMAIN-SUFFIX,hbo.com,🇯🇵 日本节点
-
-# 社交
-- DOMAIN-SUFFIX,telegram.org,🚀 节点选择
-- DOMAIN-SUFFIX,twitter.com,🚀 节点选择
-- DOMAIN-SUFFIX,x.com,🚀 节点选择
-- DOMAIN-SUFFIX,facebook.com,🚀 节点选择
-
-# 开发
-- DOMAIN-SUFFIX,github.com,🚀 节点选择
-- DOMAIN-SUFFIX,githubusercontent.com,🚀 节点选择
-
-# TikTok
-- DOMAIN-SUFFIX,tiktok.com,🇸🇬 新加坡节点
-
-# 国内IP
-- GEOIP,CN,DIRECT
-
-# 兜底
-- MATCH,🚀 节点选择
+log-level: warning
+mode: rule
